@@ -147,13 +147,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
-await addDoc(collection(db, "registrations"), {
-  name,
-  id_number: idNumber,
-  department,
-  date,
-  registration_id: "R" + Date.now(),
-  created_at: serverTimestamp()
-});
+
+
 
 
