@@ -1,0 +1,55 @@
+﻿總題數: 50
+成功: 48
+失敗: 2
+準確率: 96.00%
+ID,Symptom,Expected,AI_Reply,Result
+1,I have a terrible stomach ache and diarrhea.,Internal Medicine,Internal Medicine,Pass
+2,My chest feels tight and I'm having trouble breathing.,Internal Medicine,Internal Medicine,Pass
+3,"I feel dizzy, nauseous, and I think I have a fever.",Internal Medicine,Internal Medicine,Pass
+4,Frequent urination with a burning sensation.,Internal Medicine,Internal Medicine,Pass
+5,I have acid reflux and a burning feeling in my chest (heartburn).,Internal Medicine,Internal Medicine,Pass
+6,My blood pressure is very high and my neck feels stiff.,Internal Medicine,Internal Medicine,Pass
+7,"I'm constantly thirsty, drinking lots of water but losing weight.",Internal Medicine,Internal Medicine,Pass
+8,My heart is beating very fast (palpitations) and I feel uncomfortable.,Internal Medicine,Internal Medicine,Pass
+9,I look pale and feel dizzy whenever I stand up (anemia).,Internal Medicine,Internal Medicine,Pass
+10,I haven't been able to sleep for days (insomnia) and feel exhausted.,Internal Medicine,Internal Medicine,Pass
+11,I cut my hand deeply while slicing fruit and it's bleeding heavily.,Surgery,Surgery,Pass
+12,"I fell on my knee, it's swollen and I can't walk.",Surgery,Surgery,Pass
+13,"I got burned by hot water, my skin is red and blistering.",Surgery,Surgery,Pass
+14,I was in a bike accident and have road rash with debris in the wound.,Surgery,Surgery,Pass
+15,I have hemorrhoids and it hurts when I sit down.,Surgery,Surgery,Pass
+16,"I think I dislocated my shoulder, I can't raise my arm.",Surgery,Surgery,Pass
+17,"Severe pain in my lower right abdomen, looking like appendicitis.",Surgery,Surgery,Pass
+18,I was bitten by a stray dog on my leg and it's bleeding.,Surgery,Surgery,Pass
+19,I have a growing lump (cyst) on my back.,Surgery,Dermatology,Fail
+20,I have an ingrown toenail that is infected and painful.,Surgery,Surgery,Pass
+21,"I have a severe sore throat, it feels like razor blades when I swallow.",ENT,ENT,Pass
+22,My nose is running constantly and I keep sneezing (allergies).,ENT,ENT,Pass
+23,I feel like there's a bug buzzing inside my ear.,ENT,ENT,Pass
+24,I lost my voice and sound very hoarse.,ENT,ENT,Pass
+25,My tonsils are swollen and painful.,ENT,ENT,Pass
+26,I have a nosebleed that won't stop.,ENT,ENT,Pass
+27,Everything is spinning (vertigo) and I feel like vomiting.,ENT,ENT,Pass
+28,My ear feels blocked and I can't hear clearly.,ENT,ENT,Pass
+29,I accidentally swallowed a fish bone and it's stuck in my throat.,ENT,ENT,Pass
+30,I have painful mouth ulcers (canker sores) and can't eat.,ENT,Internal Medicine,Fail
+31,I have a lot of acne on my face and want treatment.,Dermatology,Dermatology,Pass
+32,"I have a red, itchy rash all over my back.",Dermatology,Dermatology,Pass
+33,I have a corn on the bottom of my foot that hurts when I walk.,Dermatology,Dermatology,Pass
+34,I have severe dandruff and an itchy scalp.,Dermatology,Dermatology,Pass
+35,My fingernails are turning grey and thick (fungal infection).,Dermatology,Dermatology,Pass
+36,I broke out in hives all over my body and it's extremely itchy.,Dermatology,Dermatology,Pass
+37,"I'm losing a lot of hair recently, there's a bald spot.",Dermatology,Dermatology,Pass
+38,I have a hard wart on the sole of my foot.,Dermatology,Dermatology,Pass
+39,"I got a bad sunburn at the beach, my back is peeling and painful.",Dermatology,Dermatology,Pass
+40,A mole on my body is changing shape and growing bigger.,Dermatology,Dermatology,Pass
+41,My eyes are very red and have a lot of discharge.,Ophthalmology,Ophthalmology,Pass
+42,My vision is blurry and I see dark shadows.,Ophthalmology,Ophthalmology,Pass
+43,"My eyes feel dry, gritty, and irritated.",Ophthalmology,Ophthalmology,Pass
+44,I have a stye on my eyelid and it's swollen.,Ophthalmology,Ophthalmology,Pass
+45,"I feel like my nearsightedness has gotten worse, I can't see clearly.",Ophthalmology,Ophthalmology,Pass
+46,My contact lens is stuck and my eye hurts.,Ophthalmology,Ophthalmology,Pass
+47,I see floating spots (floaters) moving in my vision.,Ophthalmology,Ophthalmology,Pass
+48,"My eyes feel very pressured and sore, with a headache.",Ophthalmology,Ophthalmology,Pass
+49,The white part of my eye is bleeding (red patch).,Ophthalmology,Ophthalmology,Pass
+50,Straight lines look wavy and distorted to me.,Ophthalmology,Ophthalmology,Pass
