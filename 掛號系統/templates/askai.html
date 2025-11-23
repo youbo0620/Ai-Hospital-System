@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 導診系統</title>
+  <!-- Bootstrap 5 & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Markdown Parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    :root {
+      --primary-color: #00bfa5;
+      --secondary-color: #e0f2f1;
+      --text-dark: #263238;
+    }
+    body {
+      background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+      color: var(--text-dark);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+    }
+    .chat-card {
+      max-width: 800px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .header-bg {
+      background: linear-gradient(90deg, #4db6ac, #009688);
+      color: white;
+      padding: 20px;
+    }
+    .chat-area {
+      padding: 30px;
+      min-height: 400px;
+    }
+    .input-area {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+    }
+    .btn-mic {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      transition: all 0.3s;
+      background-color: #00897b;
+      color: white;
+      border: none;
+    }
+    .btn-mic:hover {
+      background-color: #00695c;
+      transform: scale(1.1);
+    }
+    .btn-mic.listening {
+      background-color: #ef5350 !important;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(239, 83, 80, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(239, 83, 80, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 83, 80, 0); }
+    }
+    .btn-send {
+      background-color: #009688;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 30px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    .btn-send:hover {
+      background-color: #00796b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,150,136,0.3);
+    }
+    
+    .ai-message {
+      background-color: #e8f5e9;
+      border-left: 5px solid #66bb6a;
+      padding: 20px;
+      border-radius: 0 15px 15px 15px;
+      margin-top: 25px;
+      position: relative;
+      display: none;
+    }
+    .ai-avatar {
+      position: absolute;
+      top: -20px;
+      left: 0;
+      background: #66bb6a;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .loading-spinner {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      color: #78909c;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="chat-card">
+    
+    <!-- Header -->
+    <div class="header-bg d-flex justify-content-between align-items-center">
+      <h2 class="mb-0 fs-4 fw-bold"><i class="bi bi-robot me-2"></i><span id="title">AI 導診系統</span></h2>
+      <select id="language" class="form-select w-auto border-0 shadow-none text-primary fw-bold" onchange="switchLanguage()">
+        <option value="zh">中文</option>
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="th">ภาษาไทย</option>
+      </select>
+    </div>
+
+    <div class="chat-area">
+      
+      <p id="description" class="text-muted mb-3"><i class="bi bi-chat-left-text me-2"></i>請輸入您的症狀，AI 會協助建議適合的掛號科別：</p>
+
+      <div class="input-area shadow-sm">
+        <textarea id="symptoms" rows="4" class="form-control border-0 bg-transparent fs-5" placeholder="例如：喉嚨痛、頭暈..."></textarea>
+        
+        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+          <!-- 語音按鈕 -->
+          <button class="btn-mic shadow-sm" id="voice-btn" aria-label="開始語音輸入">
+            <i class="bi bi-mic-fill"></i>
+          </button>
+          
+          <!-- 送出按鈕 -->
+          <button class="btn-send shadow-sm" onclick="askAI()" id="ask-btn">
+            <i class="bi bi-send-fill me-2"></i>送出給 AI
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading 動畫 -->
+      <div id="loading" class="loading-spinner">
+        <div class="spinner-grow text-success" role="status" style="width: 1rem; height: 1rem;"></div>
+        <div class="spinner-grow text-success mx-1" role="status" style="width: 1rem; height: 1rem; animation-delay: 0.2s"></div>
+        <div class="spinner-grow text-success" role="status" style="width: 1rem; height: 1rem; animation-delay: 0.4s"></div>
+        <p class="mt-2 small" id="thinking-text">AI 正在思考中...</p>
+      </div>
+
+      <!-- AI 回應區 -->
+      <div id="response-area" class="ai-message shadow-sm">
+        <div class="ai-avatar"><i class="bi bi-lightbulb-fill"></i></div>
+        <h5 class="text-success fw-bold mb-3" id="result-label">AI 建議：</h5>
+        <div id="response-content"></div>
+      </div>
+
+    </div>
+
+    <div class="bg-light p-3 text-center border-top">
+      <a href="/" class="text-decoration-none fw-bold text-secondary" id="back-btn">
+        <i class="bi bi-arrow-left-circle me-1"></i> 回掛號主畫面
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/askai.js') }}"></script>
+</body>
+</html>
